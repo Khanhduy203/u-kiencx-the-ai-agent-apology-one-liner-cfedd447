@@ -14,6 +14,11 @@ if (ENTRY.trim().length === 0) {
 if (ENTRY.includes("\n") || ENTRY.includes("\r")) {
   throw new Error("entry must be a single line");
 }
+for (const ch of ENTRY) {
+  if (ch.charCodeAt(0) < 0x20 || ch.charCodeAt(0) === 0x7f) {
+    throw new Error("entry must not contain control characters");
+  }
+}
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 mkdirSync(outDir, { recursive: true });
